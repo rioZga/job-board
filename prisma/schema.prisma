@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Job {
-  id               Int      @id @default(autoincrement())
+  id               String   @id @default(uuid())
   slug             String   @unique
   title            String
   type             String
@@ -21,13 +21,25 @@ model Job {
   location         String?
   description      String?
   salary           Int
-  companyName      String
   applicationEmail String?
   applicationUrl   String?
-  companyLogoUrl   String?
   approved         Boolean  @default(false)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  company          Company  @relation(fields: [companyId], references: [id])
+  companyId        String
 
   @@map("jobs")
+}
+
+model Company {
+  id       String  @id @default(uuid())
+  name     String  @unique
+  email    String  @unique
+  password String
+  url      String?
+  logoUrl  String?
+  jobs     Job[]
+
+  @@map("companies")
 }

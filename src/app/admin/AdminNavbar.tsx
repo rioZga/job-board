@@ -1,11 +1,10 @@
 "use client";
 
-import { useClerk } from "@clerk/nextjs";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function AdminNavbar() {
-  const { user, signOut } = useClerk();
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -19,14 +18,14 @@ export default function AdminNavbar() {
         <Link href="/admin" className="font-semibold underline">
           Admin Dashboard
         </Link>
-        <div className="space-x-2">
+        {/* <div className="space-x-2">
           <span className="font-semibold">
-            {user?.primaryEmailAddress?.emailAddress}
+            Logged in user
           </span>
           <button onClick={handleSignOut} className="underline">
             Log out
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

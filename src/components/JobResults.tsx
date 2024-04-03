@@ -29,7 +29,7 @@ export default async function JobResults({
     ? {
         OR: [
           { title: { search: searchString } },
-          { companyName: { search: searchString } },
+          { company: { name: { search: searchString } } },
           { type: { search: searchString } },
           { locationType: { search: searchString } },
           { location: { search: searchString } },
@@ -48,6 +48,9 @@ export default async function JobResults({
   };
 
   const jobsPromise = prisma.job.findMany({
+    include: {
+      company: true,
+    },
     where,
     orderBy: { createdAt: "desc" },
     take: jobsPerPage,

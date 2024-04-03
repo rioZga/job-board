@@ -3,6 +3,8 @@ import JobResults from "@/components/JobResults";
 import H1 from "@/components/ui/h1";
 import { JobFilterValues } from "@/lib/validation";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { options } from "./api/auth/[...nextauth]/options";
 
 interface PageProps {
   searchParams: {
@@ -36,7 +38,7 @@ export function generateMetadata({
       type,
       location,
       remote: remote === "true",
-    })} | Flow Jobs`,
+    })} | Job Quest`,
   };
 }
 
@@ -49,6 +51,8 @@ export default async function Home({
     location,
     remote: remote === "true",
   };
+
+  const session = await getServerSession(options);
 
   return (
     <main className="m-auto my-10 max-w-5xl space-y-10 px-3">

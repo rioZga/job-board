@@ -11,6 +11,9 @@ interface PageProps {
 
 const getJob = cache(async (slug: string) => {
   const job = await prisma.job.findUnique({
+    include: {
+      company: true,
+    },
     where: { slug },
   });
 
@@ -57,7 +60,7 @@ export default async function Page({ params: { slug } }: PageProps) {
       <JobPage job={job} />
       <aside>
         <Button asChild>
-          <a href={applicationLink} className="w-40 md:w-fit">
+          <a href={applicationLink} target="_blank" className="w-40 md:w-fit">
             Apply now
           </a>
         </Button>

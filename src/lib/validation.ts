@@ -4,6 +4,21 @@ import { jobTypes, locationTypes } from "./job-types";
 const requiredString = z.string().min(1, "Required");
 const numericRequiredString = requiredString.regex(/^\d+$/, "Must be a number");
 
+const passwordSchema = z
+  .object({
+    password: z.string().min(6, "minimum 6 caracters"),
+    confirmPassword: z.string(),
+  })
+  .refine(
+    (values) => {
+      return values.password === values.confirmPassword;
+    },
+    {
+      message: "Passwords must match!",
+      path: ["confirmPassword"],
+    },
+  );
+
 const companyLogoSchema = z
   .custom<File | undefined>()
   .refine(
@@ -49,8 +64,6 @@ export const createJobSchema = z
       (value) => jobTypes.includes(value),
       "Invalid job type",
     ),
-    companyName: requiredString.max(100),
-    companyLogo: companyLogoSchema,
     description: z.string().max(5000).optional(),
     salary: numericRequiredString.max(
       9,
@@ -61,6 +74,35 @@ export const createJobSchema = z
   .and(locationSchema);
 
 export type CreateJobValues = z.infer<typeof createJobSchema>;
+
+export const createCompanySchema = z
+  .object({
+    name: requiredString.max(50),
+    email: requiredString.max(100).email(),
+    url: z.string().url().optional(),
+    logo: companyLogoSchema,
+  })
+  .and(passwordSchema);
+
+export type CreateCompanyValues = z.infer<typeof createCompanySchema>;
+
+// export const createUserSchema = z.object({
+//   name: requiredString.max(50),
+//   email: requiredString.max(100).email(),
+//   phoneNumber: z.string().length(8).optional(),
+//   employed: z.coerce.boolean(),
+//   currentPosition: z.string().max(20).optional(),
+//   address: z.string().max(100).optional(),
+// });
+
+// export type CreateUserValues = z.infer<typeof createUserSchema>;
+
+export const loginSchema = z.object({
+  email: requiredString.max(100).email(),
+  password: z.string(),
+});
+
+export type LoginValues = z.infer<typeof loginSchema>;
 
 export const jobFilterSchema = z.object({
   q: z.string().optional(),

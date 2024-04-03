@@ -23,7 +23,7 @@ import { draftToMarkdown } from "markdown-draft-js";
 import { useForm } from "react-hook-form";
 import { createJobPosting } from "./actions";
 
-export default function NewJobForm() {
+export default function NewJobForm({ companyId }: { companyId: string }) {
   const form = useForm<CreateJobValues>({
     resolver: zodResolver(createJobSchema),
   });
@@ -48,7 +48,7 @@ export default function NewJobForm() {
     });
 
     try {
-      await createJobPosting(formData);
+      await createJobPosting(formData, companyId);
     } catch (error) {
       alert("Something went wrong, please try again.");
     }
@@ -105,40 +105,6 @@ export default function NewJobForm() {
                         </option>
                       ))}
                     </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="companyName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="companyLogo"
-              render={({ field: { value, ...fieldValues } }) => (
-                <FormItem>
-                  <FormLabel>Company logo</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...fieldValues}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        fieldValues.onChange(file);
-                      }}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

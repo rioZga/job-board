@@ -1,33 +1,32 @@
 import { formatMoney } from "@/lib/utils";
-import { Job } from "@prisma/client";
 import { Banknote, Briefcase, Clock, Globe2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "./Markdown";
+import { JobWithCompany } from "@/lib/prisma";
 
 interface JobPageProps {
-  job: Job;
+  job: JobWithCompany;
 }
 
 export default function JobPage({ job }: JobPageProps) {
   const {
     title,
     description,
-    companyName,
     applicationUrl,
     type,
     locationType,
     location,
     salary,
-    companyLogoUrl,
+    company,
   } = job;
 
   return (
     <section className="w-full grow space-y-5">
       <div className="flex items-center gap-3">
-        {companyLogoUrl && (
+        {company.logoUrl && (
           <Image
-            src={companyLogoUrl}
+            src={company.logoUrl}
             alt="Company logo"
             width={100}
             height={100}
@@ -43,10 +42,10 @@ export default function JobPage({ job }: JobPageProps) {
                   href={new URL(applicationUrl).origin}
                   className="text-green-500 hover:underline"
                 >
-                  {companyName}
+                  {company.name}
                 </Link>
               ) : (
-                <span>{companyName}</span>
+                <span>{company.name}</span>
               )}
             </p>
           </div>

@@ -10,6 +10,9 @@ interface PageProps {
 export default async function Page({ params: { slug } }: PageProps) {
   const job = await prisma.job.findUnique({
     where: { slug },
+    include: {
+      company: true,
+    },
   });
 
   if (!job) notFound();
