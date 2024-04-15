@@ -13,6 +13,7 @@ export const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
       profile(profile: GoogleProfile) {
+        userDbEntry(profile.sub, "google");
         return { ...profile, role: "user", id: profile.sub };
       },
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -20,6 +21,7 @@ export const options: NextAuthOptions = {
     }),
     GithubProvider({
       profile(profile: GithubProfile) {
+        userDbEntry(profile.id.toString(), "github");
         return { ...profile, role: "user", id: profile.id.toString() };
       },
       clientId: process.env.GITHUB_CLIENT_ID as string,
@@ -88,3 +90,16 @@ export const options: NextAuthOptions = {
     },
   },
 };
+
+async function userDbEntry(id: string, provider: string) {
+  await prisma.user.upsert({
+    where: {
+      id,
+    },
+    create: {
+      id,
+      provider,
+    },
+    update: {},
+  });
+}

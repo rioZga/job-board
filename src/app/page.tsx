@@ -3,8 +3,6 @@ import JobResults from "@/components/JobResults";
 import H1 from "@/components/ui/h1";
 import { JobFilterValues } from "@/lib/validation";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { options } from "./api/auth/[...nextauth]/options";
 
 interface PageProps {
   searchParams: {
@@ -20,10 +18,10 @@ function getTitle({ q, type, location, remote }: JobFilterValues) {
   const titlePrefix = q
     ? `${q} jobs`
     : type
-      ? `${type} developer jobs`
+      ? `${type} jobs`
       : remote
-        ? "Remote developer jobs"
-        : "All developer jobs";
+        ? "Remote jobs"
+        : "All jobs";
   const titleSuffix = location ? ` in ${location}` : "";
 
   return `${titlePrefix}${titleSuffix}`;
@@ -51,8 +49,6 @@ export default async function Home({
     location,
     remote: remote === "true",
   };
-
-  const session = await getServerSession(options);
 
   return (
     <main className="m-auto my-10 max-w-5xl space-y-10 px-3">

@@ -13,11 +13,10 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { CreateCompanyValues, createCompanySchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { createCompany } from "./actions";
 
 export default function CompanySignUp() {
-  const router = useRouter();
   const { toast } = useToast();
   const form = useForm<CreateCompanyValues>({
     resolver: zodResolver(createCompanySchema),
@@ -30,22 +29,22 @@ export default function CompanySignUp() {
   } = form;
 
   async function onSubmit(values: CreateCompanyValues) {
-    const response = await fetch("/api/company", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
     });
 
-    if (!response.ok) {
+    try {
+      await createCompany(formData);
+    } catch {
       toast({
         title: "Error",
         description: "Something went wrong!",
         variant: "destructive",
       });
-    } else {
-      router.push("/auth/login");
     }
   }
 

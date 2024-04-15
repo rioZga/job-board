@@ -1,9 +1,11 @@
 import { cache } from "react";
-import prisma from "@/lib/prisma";
+import prisma, { UserWithCompanies } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import JobPage from "@/components/JobPage";
 import { Button } from "@/components/ui/button";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 interface PageProps {
   params: { slug: string };
@@ -42,6 +44,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params: { slug } }: PageProps) {
+  const session = await getServerSession(options);
   const job = await getJob(slug);
 
   const { applicationEmail, applicationUrl } = job;
@@ -55,9 +58,24 @@ export default async function Page({ params: { slug } }: PageProps) {
     notFound();
   }
 
+  let user: UserWithCompanies | undefined = undefined;
+
+  if (session && session.user) {
+    const res = await prisma.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
+      include: {
+        companies: true,
+      },
+    });
+
+    if (res) user = res;
+  }
+
   return (
     <main className="m-auto my-10 flex max-w-5xl flex-col items-center gap-5 px-3 md:flex-row md:items-start">
-      <JobPage job={job} />
+      <JobPage job={job} user={user} />
       <aside>
         <Button asChild>
           <a href={applicationLink} target="_blank" className="w-40 md:w-fit">

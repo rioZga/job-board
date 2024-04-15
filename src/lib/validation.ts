@@ -86,17 +86,6 @@ export const createCompanySchema = z
 
 export type CreateCompanyValues = z.infer<typeof createCompanySchema>;
 
-// export const createUserSchema = z.object({
-//   name: requiredString.max(50),
-//   email: requiredString.max(100).email(),
-//   phoneNumber: z.string().length(8).optional(),
-//   employed: z.coerce.boolean(),
-//   currentPosition: z.string().max(20).optional(),
-//   address: z.string().max(100).optional(),
-// });
-
-// export type CreateUserValues = z.infer<typeof createUserSchema>;
-
 export const loginSchema = z.object({
   email: requiredString.max(100).email(),
   password: z.string(),

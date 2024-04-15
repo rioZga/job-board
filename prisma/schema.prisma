@@ -40,6 +40,16 @@ model Company {
   url      String?
   logoUrl  String?
   jobs     Job[]
+  users    User[]
 
   @@map("companies")
+}
+
+model User {
+  id           String    @id
+  provider     String
+  companies    Company[]
+  subscription Json?
+
+  @@map("users")
 }

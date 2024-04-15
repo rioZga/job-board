@@ -3,13 +3,15 @@ import { Banknote, Briefcase, Clock, Globe2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "./Markdown";
-import { JobWithCompany } from "@/lib/prisma";
+import { JobWithCompany, UserWithCompanies } from "@/lib/prisma";
+import FollowButton from "./FollowButton";
 
 interface JobPageProps {
   job: JobWithCompany;
+  user: UserWithCompanies | undefined;
 }
 
-export default function JobPage({ job }: JobPageProps) {
+export default function JobPage({ job, user }: JobPageProps) {
   const {
     title,
     description,
@@ -40,6 +42,7 @@ export default function JobPage({ job }: JobPageProps) {
               {applicationUrl ? (
                 <Link
                   href={new URL(applicationUrl).origin}
+                  target="_blank"
                   className="text-green-500 hover:underline"
                 >
                   {company.name}
@@ -47,6 +50,7 @@ export default function JobPage({ job }: JobPageProps) {
               ) : (
                 <span>{company.name}</span>
               )}
+              {user && <FollowButton company={company} user={user} />}
             </p>
           </div>
           <div className="text-muted-foreground">

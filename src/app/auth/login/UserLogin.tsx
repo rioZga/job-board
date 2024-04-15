@@ -11,14 +11,14 @@ export default function UserLogin() {
     <main className="m-auto my-10 max-w-3xl space-y-10">
       <div className="flex flex-col items-center space-y-6 rounded-lg border p-4">
         <Button
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google", { redirect: true, callbackUrl: "/" })}
           className="flex min-w-96 gap-5"
         >
           <Image src={google} width={21} height={21} alt="google icon" />
           Sign in with Google.
         </Button>
         <Button
-          onClick={() => signIn("github")}
+          onClick={() => signIn("github", { redirect: true, callbackUrl: "/" })}
           className="flex min-w-96 gap-5"
         >
           <Image src={github} width={21} height={21} alt="github icon" />

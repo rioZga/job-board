@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 
 export async function createJobPosting(formData: FormData, companyId: string) {
   const values = Object.fromEntries(formData.entries());
-  console.log("in action!");
   const {
     title,
     type,
@@ -20,11 +19,9 @@ export async function createJobPosting(formData: FormData, companyId: string) {
     salary,
   } = createJobSchema.parse(values);
 
-  console.log("after parse");
-
   const slug = `${toSlug(title)}-${nanoid(10)}`;
 
-  await prisma.job.create({
+  const job = await prisma.job.create({
     data: {
       slug,
       title: title.trim(),
@@ -35,12 +32,18 @@ export async function createJobPosting(formData: FormData, companyId: string) {
       applicationUrl: applicationUrl?.trim(),
       description: description?.trim(),
       salary: parseInt(salary),
+      approved: true,
       company: {
         connect: {
           id: companyId,
         },
       },
     },
+  });
+
+  fetch("http://localhost:3000/api/push-webhook", {
+    method: "POST",
+    body: JSON.stringify(job),
   });
 
   redirect("/job-submitted");

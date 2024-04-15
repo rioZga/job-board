@@ -1,8 +1,8 @@
 const placeholderJobs = [
   {
+    companyId: "ba194903-42f7-4dcc-963d-5749ae6d8500",
     title: "Full-Stack Developer at Stripe",
     type: "Full-time",
-    companyName: "Stripe",
     locationType: "Remote",
     location: "San Francisco, California, United States",
     applicationEmail: "apply@stripe.com",
@@ -51,9 +51,9 @@ Stripe is an equal opportunity employer. We value diversity and are committed to
 `,
   },
   {
+    companyId: "a74db8cc-9509-44b2-9f2b-36bea661116d",
     title: "Full-Stack Developer at Vercel",
     type: "Full-time",
-    companyName: "Vercel",
     locationType: "Hybrid",
     location: "San Francisco, California, United States",
     applicationEmail: "apply@vercel.com",
@@ -106,9 +106,9 @@ Join us at Vercel and be a part of shaping the future of web development!
 `,
   },
   {
+    companyId: "32f520a7-07fa-4b59-8d32-7af40b871f18",
     title: "ChatGPT Backend Developer at OpenAI",
     type: "Part-time",
-    companyName: "OpenAI",
     locationType: "On-site",
     location: "San Francisco, California, United States",
     applicationUrl: "https://openai.com/apply",
@@ -158,41 +158,9 @@ If you're passionate about AI and want to contribute to cutting-edge technology 
 `,
   },
   {
-    title: "Intern at Coding in Flow",
-    type: "Internship",
-    companyName: "Coding in Flow",
-    locationType: "Remote",
-    applicationUrl: "https://codinginflow.com",
-    slug: "intern-at-coding-in-flow-4",
-    salary: 500,
-    approved: true,
-    description: `
-**Help build the best coding tutorials**
-
-I might not be able to pay you a lot, but I can offer you a lot of experience and a lot of fun. I'm looking for someone who is passionate about coding and wants to help me create the best coding tutorials on YouTube.
-`,
-  },
-  {
-    title: "Contractor at SmartDiary.co",
-    type: "Contract",
-    companyName: "SmartDiary.co",
-    locationType: "Remote",
-    applicationUrl: "https://smartdiary.co",
-    slug: "contractor-at-smartdiary-co-5",
-    salary: 30000,
-    approved: true,
-    description: `
-**Help build the future of journaling**
-
-Smart Diary is the intelligent journaling app with AI integration. I'm looking for someone who can help me build this website. 
-
-Try it out for free at [https://smartdiary.co](https://smartdiary.co).
-`,
-  },
-  {
+    companyId: "cc4a83c4-ee8f-4a0f-82c2-662fac0cd7b2",
     title: "Software Engineer at Microsoft",
     type: "Temporary",
-    companyName: "Microsoft",
     locationType: "On-site",
     location: "Redmond, Washington, United States",
     applicationEmail: "applications@microsoft.com",
@@ -241,9 +209,9 @@ As a Microsoft contractor, you'll have the opportunity to work on exciting proje
 `,
   },
   {
+    companyId: "b7ef1e6f-ecd4-4cf0-8b53-18260acd3f7d",
     title: "Full-Stack Developer at Apple",
     type: "Full-time",
-    companyName: "Apple Inc.",
     locationType: "Hybrid",
     location: "Cupertino, California, United States",
     applicationUrl: "https://apple.com/apply",
@@ -294,9 +262,9 @@ Join Apple and be a part of a team that's dedicated to making a difference in th
 `,
   },
   {
+    companyId: "ffe09d31-c1e3-4def-ad56-e4b05b39da97",
     title: "Junior Web Developer at Shopify",
     type: "Part-time",
-    companyName: "Shopify",
     locationType: "Hybrid",
     location: "Ottawa, Ontario, Canada",
     applicationEmail: "career@shopify.com",
